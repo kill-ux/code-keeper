@@ -1,0 +1,30 @@
+#SPDX-License-Identifier: MIT-0
+---
+# tasks file for roles/gitlab
+- name: Update APT package cache
+  ansible.builtin.apt:
+    update_cache: yes
+    cache_valid_time: 3600
+  tags: [install, setup]
+
+- name: Install required packages for GitLab Runner
+  ansible.builtin.apt:
+    name:
+      - git
+      - curl
+      - wget
+    state: present
+  tags: [install, packages]
+
+- name: Add GitLab EE repository using official script
+  ansible.builtin.shell:
+    cmd: curl --location "https://packages.gitlab.com/install/repositories/gitlab/gitlab-ce/script.deb.sh" | sudo bash
+    creates: /etc/apt/sources.list.d/gitlab_gitlab-ce.list
+  tags: [install, repository]
+
+- name: Install GitLab EE
+  ansible.builtin.apt:
+    name: gitlab-ce
+    state: present
+  tags: [install, gitlab]
+

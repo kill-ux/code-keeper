@@ -1,0 +1,15 @@
+---
+# Minimal galaxy.yml for a playbook project for tools to recognize this as a collection
+
+namespace: "cicdlab"
+name: "codekeeper"
+readme: README.md
+version: 0.0.1
+authors:
+  - your name <example@domain.com>
+
+description: Collection for cicdlab.codekeeper playbook project
+license: ["GPL-3.0-or-later"]
+# TO-DO: update the tags based on your content type
+tags: ["tools"]
+repository: NA
