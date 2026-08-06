@@ -1,7 +1,7 @@
 #SPDX-License-Identifier: MIT-0
 ---
 # handlers file for roles/gitlab
-- name: Restart nginx
-  ansible.builtin.service:
-    name: nginx
-    state: restarted
+# - name: Reconfigure GitLab
+#   ansible.builtin.command: gitlab-ctl reconfigure
+#   register: reconfigure_result
+#   failed_when: reconfigure_result.rc != 0

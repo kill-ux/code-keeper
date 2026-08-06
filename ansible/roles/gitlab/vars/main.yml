@@ -1,3 +1,4 @@
 #SPDX-License-Identifier: MIT-0
 ---
 # vars file for roles/gitlab
+gitlab_external_url: "http://192.168.56.20"

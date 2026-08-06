@@ -1,0 +1,16 @@
+---
+# tasks file for roles/gitlab
+- name: Verify GitLab service is running
+  ansible.builtin.service:
+    name: gitlab-runsvdir
+    state: started
+  become: true
+
+- name: Check GitLab HTTP endpoint responsiveness
+  ansible.builtin.uri:
+    url: "http://192.168.56.20"
+    status_code: [200, 302]
+  register: gitlab_http_check
+  until: gitlab_http_check.status in [200, 302]
+  retries: 12
+  delay: 10

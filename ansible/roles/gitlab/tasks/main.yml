@@ -1,7 +1,13 @@
-#SPDX-License-Identifier: MIT-0
 ---
 # tasks file for roles/gitlab
-- name: Include installation tasks
+- name: Include installation Gitalb tasks 
   ansible.builtin.import_tasks: install.yml
   tags: [install]
 
+- name: Include the virification tasks
+  ansible.builtin.import_tasks: verify.yml
+  tags: [verify]
+
+- name: Include user creationg tasks
+  ansible.builtin.import_tasks: users.yml
+  tags: [verify]

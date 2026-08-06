@@ -1,6 +1,10 @@
-#SPDX-License-Identifier: MIT-0
 ---
 # tasks file for roles/gitlab
+- name: Load secret vault variables
+  ansible.builtin.include_vars:
+    file: vault.yml
+  tags: [always]
+
 - name: Update APT package cache
   ansible.builtin.apt:
     update_cache: yes
@@ -16,15 +20,40 @@
     state: present
   tags: [install, packages]
 
-- name: Add GitLab EE repository using official script
-  ansible.builtin.shell:
-    cmd: curl --location "https://packages.gitlab.com/install/repositories/gitlab/gitlab-ce/script.deb.sh" | sudo bash
-    creates: /etc/apt/sources.list.d/gitlab_gitlab-ce.list
+- name: Download GitLab CE repository setup script
+  ansible.builtin.get_url:
+    url: https://packages.gitlab.com/install/repositories/gitlab/gitlab-ce/script.deb.sh
+    dest: /tmp/gitlab-ce-setup.sh
+    mode: "0700"
   tags: [install, repository]
 
-- name: Install GitLab EE
+- name: Run GitLab CE repository setup script
+  ansible.builtin.command:
+    cmd: /tmp/gitlab-ce-setup.sh
+    creates: /etc/apt/sources.list.d/gitlab_gitlab-ce.list
+  become: true
+  tags: [install, repository]
+
+- name: Install GitLab CE
   ansible.builtin.apt:
     name: gitlab-ce
     state: present
   tags: [install, gitlab]
 
+- name: Deploy GitLab configuration file
+  ansible.builtin.template:
+    src: gitlab.rb.j2
+    dest: /etc/gitlab/gitlab.rb
+    owner: root
+    group: root
+    mode: "0600"
+  register: gitlab_config
+  become: true
+  tags: [gitlab, config]
+
+- name: Reconfigure GitLab
+  ansible.builtin.command:
+    cmd: gitlab-ctl reconfigure
+  become: true
+  when: gitlab_config.changed 
+  tags: [gitlab, config]
