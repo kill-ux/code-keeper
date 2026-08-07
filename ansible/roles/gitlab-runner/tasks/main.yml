@@ -53,6 +53,7 @@
         --description "docker-runner"
         --tag-list "docker,ubuntu"
         --run-untagged="true"
+        --docker-network-mode "test-network"
   when: 
     - gitlab_runner_registration_token is defined
     - not runner_config_file.stat.exists or runner_config_file.stat.size == 0

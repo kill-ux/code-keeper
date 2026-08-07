@@ -31,4 +31,6 @@
     state: present
     update_cache: true
 
-  
+# - name: Create a network
+#   ansible.builtin.command:
+#     cmd: docker network create test-network
