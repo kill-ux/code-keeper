@@ -6,13 +6,15 @@
 # backwards compatibility). Please don't change it unless you know what
 # you're doing.
 Vagrant.configure("2") do |config|
-  config.vm.define "ubu" do |ubu|
-    ubu.vm.box = "ubuntu/jammy64"
-    ubu.vm.hostname = "ubu"
-    ubu.vm.network "private_network", ip: "192.168.56.20"
-    ubu.vm.provider "virtualbox" do |vb|
+  config.vm.define "sandbox" do |sandbox|
+
+    sandbox.vm.box = "bento/ubuntu-24.04"
+    sandbox.vm.box_version = "202510.26.0"
+    sandbox.vm.network "private_network", ip: "192.168.56.20"
+
+    sandbox.vm.provider "virtualbox" do |vb|
       vb.cpus = 4
-      vb.memory = 8192
+      vb.memory = 4096
     end
   end
 end

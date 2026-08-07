@@ -3,4 +3,5 @@
   hosts: gitlab-server
   become: true
   roles:
+    - common
     - gitlab

@@ -1,0 +1,19 @@
+#SPDX-License-Identifier: MIT-0
+---
+# tasks file for roles/common
+- name: Update APT package cache
+  ansible.builtin.apt:
+    update_cache: yes
+    cache_valid_time: 3600
+  tags: [always]
+
+- name: Install common utility packages
+  ansible.builtin.apt:
+    name:
+      - git
+      - curl
+      - wget
+      - ca-certificates
+      - gnupg
+    state: present
+  tags: [common, packages]

@@ -22,6 +22,8 @@
         ).execute
 
         raise Array(res.message).join(', ') if res.error?
+
+        res.payload[:user].update!(admin: true)
       "
   become: true
   when: "admin_user_check.stdout == 'f'"
