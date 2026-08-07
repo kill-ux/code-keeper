@@ -1,6 +1,10 @@
 #SPDX-License-Identifier: MIT-0
 ---
 # tasks file for roles/gitlab-runner
+- name: Load secret vault variables
+  ansible.builtin.include_vars:
+    file: vault.yml
+  tags: [always]
 
 - name: Ensure GitLab Runner configuration directory exists
   ansible.builtin.file:
@@ -17,3 +21,38 @@
     owner: root
     group: root
     mode: "0644"
+  register: runner_service
+
+- name: Reload systemd daemon
+  ansible.builtin.systemd:
+    daemon-reload: true
+  when: runner_service.changed
+  changed_when: true
+
+- name: Ensure GitLab Runner service is enabled and started
+  ansible.builtin.systemd:
+    name: gitlab-runner-container
+    state: started
+    enabled: true
+
+- name: Check if Runner is already registered
+  ansible.builtin.stat:
+    path: /srv/gitlab-runner/config/config.toml
+  register: runner_config_file
+
+- name: Register GitLab Runner
+  ansible.builtin.command:
+    cmd: >
+      docker exec gitlab-runner gitlab-runner register
+        --non-interactive
+        --url "{{ gitlab_external_url }}"
+        --registration-token "{{ gitlab_runner_registration_token }}"
+        --executor "docker"
+        --docker-image docker:cli
+        --docker-volumes "/var/run/docker.sock:/var/run/docker.sock"
+        --description "docker-runner"
+        --tag-list "docker,ubuntu"
+        --run-untagged="true"
+  when: 
+    - gitlab_runner_registration_token is defined
+    - not runner_config_file.stat.exists or runner_config_file.stat.size == 0
