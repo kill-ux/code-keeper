@@ -3,7 +3,7 @@
 - name: Check if admin user exists
   ansible.builtin.command: gitlab-psql -A -t -c "SELECT EXISTS(  SELECT 1 FROM users WHERE username = '{{ vault_gitlab_admin_username }}' )"
   become: true
-  register: admin_user_check
+  register: gitlab_admin_user_check
   changed_when: false
 
 - name: Create dedicated admin user via Rails console
@@ -26,4 +26,5 @@
         res.payload[:user].update!(admin: true)
       "
   become: true
-  when: "admin_user_check.stdout == 'f'"
+  when: "gitlab_admin_user_check.stdout == 'f'"
+  changed_when: true

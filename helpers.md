@@ -8,3 +8,4 @@ ansible-vault view roles/gitlab/vars/vault.yml --vault-password-file .vault_pass
 # Namespace.where(path: 'killua').destroy_all
 User.find_by(username: 'killua').destroy
 ```
+<!-- taileskls -->

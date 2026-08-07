@@ -36,9 +36,10 @@
   become: true
   tags: [gitlab, config]
 
-- name: Reconfigure GitLab
+- name: Reconfigure GitLab # noqa: no-handler
   ansible.builtin.command:
     cmd: gitlab-ctl reconfigure
   become: true
-  when: gitlab_config.changed 
+  when: gitlab_config.changed
+  changed_when: true
   tags: [gitlab, config]

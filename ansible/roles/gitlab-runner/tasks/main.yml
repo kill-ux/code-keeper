@@ -1,0 +1,19 @@
+#SPDX-License-Identifier: MIT-0
+---
+# tasks file for roles/gitlab-runner
+
+- name: Ensure GitLab Runner configuration directory exists
+  ansible.builtin.file:
+    path: /srv/gitlab-runner/config
+    state: directory
+    owner: root
+    group: root
+    mode: "0755"
+
+- name: Deploy GitLab Runner systemd service unit
+  ansible.builtin.copy:
+    src: gitlab-runner-container.service
+    dest: /etc/systemd/system/gitlab-runner-container.service
+    owner: root
+    group: root
+    mode: "0644"
