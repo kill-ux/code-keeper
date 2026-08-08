@@ -15,3 +15,7 @@ User.find_by(username: 'killua').destroy
 cache is chaching inside the host so whe run npm install so it install node_module and catch it in /cache like so he store in time expired for all the piplines
 artifacts is from stages of one pipline so each stage can download the stage before artifact 
 ```
+
+
+
+<!-- test/build/push -->
