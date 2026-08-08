@@ -1,0 +1,11 @@
+concurrent = {{ gitlab_runner_concurrent | default(1) }}
+
+[[runners]]
+  name = "{{ gitlab_runner_name | default('docker-runner') }}"
+  url = "{{ gitlab_external_url }}"
+  token = "{{ gitlab_runner_authentication_token }}"
+  executor = "docker"
+
+  [runners.docker]
+    image = "docker:cli"
+    volumes = ["/var/run/docker.sock:/var/run/docker.sock", "/cache"]
