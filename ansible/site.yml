@@ -3,4 +3,7 @@
   hosts: gitlab-server
   become: true
   roles:
+    - common
+    - docker
     - gitlab
+    - gitlab-runner

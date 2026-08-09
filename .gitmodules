@@ -1,0 +1,6 @@
+[submodule "repositories/api-gateway"]
+	path = repositories/api-gateway
+	url = https://github.com/kill-ux/api-gateway.git
+[submodule "repositories/inventory-app"]
+	path = repositories/inventory-app
+	url = https://github.com/kill-ux/inventory-app.git

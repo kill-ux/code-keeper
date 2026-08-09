@@ -1,0 +1,42 @@
+{
+    "changed": true,
+    "cmd": [
+        "docker",
+        "exec",
+        "gitlab-runner",
+        "gitlab-runner",
+        "register",
+        "--non-interactive",
+        "--url",
+        "http://192.168.56.20",
+        "--registration-token",
+        "blablabla",
+        "--executor",
+        "docker",
+        "--docker-image",
+        "docker:cli",
+        "--docker-volumes",
+        "/var/run/docker.sock:/var/run/docker.sock",
+        "--description",
+        "docker-runner",
+        "--tag-list",
+        "docker,ubuntu",
+        "--run-untagged=true"
+    ],
+    "delta": "0:00:00.803440",
+    "end": "2026-08-07 17:18:31.646028",
+    "msg": "The command exited with a non-zero return code.",
+    "rc": 1,
+    "start": "2026-08-07 17:18:30.842588",
+    "stderr": "Runtime platform                                  \u001b[0;m  arch\u001b[0;m=amd64 os\u001b[0;m=linux pid\u001b[0;m=17 revision\u001b[0;m=a470182f version\u001b[0;m=19.2.1\nRunning in system-mode.                           \u001b[0;m \n                                                  \u001b[0;m \n\u001b[0;33mWARNING: Support for registration tokens and runner parameters in the 'register' command has been deprecated in GitLab Runner 15.6 and will be replaced with support for authentication tokens. For more information, see https://docs.gitlab.com/ci/runners/new_creation_workflow/\u001b[0;m \n\u001b[31;1mERROR: Registering runner... forbidden (check registration token)\u001b[0;m  \u001b[31;1mcorrelation_id\u001b[0;m=01KZEKQJV86QE0KTF3ZJ62SV8H \u001b[31;1mrunner\u001b[0;m=blablabla \u001b[31;1mrunner_name\u001b[0;m=docker-runner \u001b[31;1mstatus\u001b[0;m=POST http://192.168.56.20/api/v4/runners: 403 Forbidden (403 Forbidden - invalid token supplied)\n\u001b[31;1mPANIC: Failed to register the runner.             \u001b[0;m ",
+    "stderr_lines": [
+        "Runtime platform                                  \u001b[0;m  arch\u001b[0;m=amd64 os\u001b[0;m=linux pid\u001b[0;m=17 revision\u001b[0;m=a470182f version\u001b[0;m=19.2.1",
+        "Running in system-mode.                           \u001b[0;m ",
+        "                                                  \u001b[0;m ",
+        "\u001b[0;33mWARNING: Support for registration tokens and runner parameters in the 'register' command has been deprecated in GitLab Runner 15.6 and will be replaced with support for authentication tokens. For more information, see https://docs.gitlab.com/ci/runners/new_creation_workflow/\u001b[0;m ",
+        "\u001b[31;1mERROR: Registering runner... forbidden (check registration token)\u001b[0;m  \u001b[31;1mcorrelation_id\u001b[0;m=01KZEKQJV86QE0KTF3ZJ62SV8H \u001b[31;1mrunner\u001b[0;m=blablabla \u001b[31;1mrunner_name\u001b[0;m=docker-runner \u001b[31;1mstatus\u001b[0;m=POST http://192.168.56.20/api/v4/runners: 403 Forbidden (403 Forbidden - invalid token supplied)",
+        "\u001b[31;1mPANIC: Failed to register the runner.             \u001b[0;m "
+    ],
+    "stdout": "",
+    "stdout_lines": []
+}

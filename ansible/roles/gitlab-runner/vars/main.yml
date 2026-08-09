@@ -1,0 +1,4 @@
+#SPDX-License-Identifier: MIT-0
+---
+# vars file for roles/gitlab-runner
+gitlab_runner_name: "docker-runner"

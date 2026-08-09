@@ -5,21 +5,6 @@
     file: vault.yml
   tags: [always]
 
-- name: Update APT package cache
-  ansible.builtin.apt:
-    update_cache: yes
-    cache_valid_time: 3600
-  tags: [install, setup]
-
-- name: Install required packages for GitLab Runner
-  ansible.builtin.apt:
-    name:
-      - git
-      - curl
-      - wget
-    state: present
-  tags: [install, packages]
-
 - name: Download GitLab CE repository setup script
   ansible.builtin.get_url:
     url: https://packages.gitlab.com/install/repositories/gitlab/gitlab-ce/script.deb.sh
@@ -51,9 +36,10 @@
   become: true
   tags: [gitlab, config]
 
-- name: Reconfigure GitLab
+- name: Reconfigure GitLab # noqa: no-handler
   ansible.builtin.command:
     cmd: gitlab-ctl reconfigure
   become: true
-  when: gitlab_config.changed 
+  when: gitlab_config.changed
+  changed_when: true
   tags: [gitlab, config]

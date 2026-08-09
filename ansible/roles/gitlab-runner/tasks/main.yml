@@ -1,0 +1,33 @@
+#SPDX-License-Identifier: MIT-0
+---
+# tasks file for roles/gitlab-runner
+- name: Load secret vault variables
+  ansible.builtin.include_vars:
+    file: vault.yml
+  tags: [always]
+
+- name: Ensure GitLab Runner configuration directory exists
+  ansible.builtin.file:
+    path: /srv/gitlab-runner/config
+    state: directory
+    owner: root
+    group: root
+    mode: "0755"
+
+- name: Deploy config.toml directly
+  ansible.builtin.template:
+    src: config.toml.j2
+    dest: /srv/gitlab-runner/config/config.toml
+    owner: root
+    group: root
+    mode: "0600"
+
+- name: Deploy Dockerized GitLab Runner container
+  community.docker.docker_container:
+    name: gitlab-runner
+    image: gitlab/gitlab-runner:latest
+    state: started
+    restart_policy: always
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /srv/gitlab-runner/config:/etc/gitlab-runner
