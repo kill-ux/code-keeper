@@ -1,0 +1,33 @@
+#SPDX-License-Identifier: MIT-0
+---
+# tasks file for roles/sonar-scanner
+- name: Load secret vault variables
+  ansible.builtin.include_vars:
+    file: vault.yml
+  tags: [always]
+  
+- name: Set vm.max_map_count for Elasticsearch (SonarQube requirement)
+  ansible.posix.sysctl:
+    name: vm.max_map_count
+    value: "262144"
+    state: present
+    reload: yes
+
+- name: Ensure destination directory exists
+  ansible.builtin.file:
+    path: /opt/sonarqube
+    state: directory
+    mode: '0755'
+
+- name: Deploy docker-compose template
+  ansible.builtin.template:
+    src: docker-compose.yml.j2
+    dest: /opt/sonarqube/docker-compose.yml
+    owner: root
+    group: root
+    mode: '0755'
+
+- name: Start SonarQube stack via Docker Compose
+  community.docker.docker_compose_v2:
+    project_src: /opt/sonarqube
+    state: present

@@ -7,3 +7,4 @@
     - docker
     - gitlab
     - gitlab-runner
+    - sonar-scanner

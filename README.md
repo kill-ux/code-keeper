@@ -21,3 +21,4 @@ sequenceDiagram
       GitLabRunner -->>- GitLab: updating job output and status with job_token
     end
 ```
+sonar-scanner
