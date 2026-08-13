@@ -1,5 +1,6 @@
 services:
   db:
+    container_name: sonarqube-db
     image: postgres:15-alpine
     restart: always
     environment:
@@ -12,6 +13,7 @@ services:
       - sonarnet
 
   sonarqube:
+    container_name: sonarqube
     image: sonarqube:lts-community
     restart: always
     depends_on:
@@ -25,7 +27,6 @@ services:
     volumes:
       - sonar_data:/opt/sonarqube/data
       - sonar_extensions:/opt/sonarqube/extensions
-      - sonar_logs:/opt/sonarqube/logs
     networks:
       - sonarnet
 
@@ -37,4 +38,3 @@ volumes:
   postgres_data:
   sonar_data:
   sonar_extensions:
-  sonar_logs:
