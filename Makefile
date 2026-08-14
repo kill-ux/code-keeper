@@ -1,4 +1,4 @@
-.PHONY: help up down destroy status ssh provision lint syntax ping deploy deploy-check clean
+.PHONY: help up down destroy status ssh provision lint syntax ping deploy deploy-check trivy-scan clean
 
 # Default target when running just 'make'
 .DEFAULT_GOAL := help
@@ -37,6 +37,9 @@ syntax: ## Check Ansible playbooks for syntax errors
 
 lint: ## Run ansible-lint to check best practices (requires ansible-lint)
 	cd ansible && ansible-lint site.yml
+
+trivy-scan: ## Scan IaC files for misconfigurations using Trivy
+	cd ansible && trivy config --severity CRITICAL,HIGH .
 
 deploy: ## Run the main Ansible playbook
 	cd ansible && ansible-playbook site.yml
