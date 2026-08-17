@@ -7,3 +7,6 @@
 [submodule "repositories/billing-app"]
 	path = repositories/billing-app
 	url = https://github.com/kill-ux/billing-app.git
+[submodule "repositories/code-keeper-infra"]
+	path = repositories/code-keeper-infra
+	url = https://github.com/kill-ux/code-keeper-infra.git
