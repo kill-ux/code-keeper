@@ -14,7 +14,23 @@ Vagrant.configure("2") do |config|
 
     sandbox.vm.provider "virtualbox" do |vb|
       vb.cpus = 4
-      vb.memory = 4096
+      vb.memory = 6144
     end
+
+    sandbox.vm.provision "shell", inline: <<-SHELL
+      #expend size
+      lvextend -l +100%FREE /dev/mapper/ubuntu--vg-ubuntu--lv
+      resize2fs /dev/mapper/ubuntu--vg-ubuntu--lv
+
+      # setup swap
+      SWAP_SIZE=3G
+      if ! grep -q "swapfile" /etc/fstab; then
+        fallocate -l ${SWAP_SIZE} /swapfile
+        chmod 600 /swapfile
+        mkswap /swapfile
+        swapon /swapfile
+        echo '/swapfile none swap sw 0 0' >> /etc/fstab
+      fi
+    SHELL
   end
 end

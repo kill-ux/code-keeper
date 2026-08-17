@@ -9,3 +9,4 @@ concurrent = {{ gitlab_runner_concurrent | default(1) }}
   [runners.docker]
     image = "docker:cli"
     volumes = ["/var/run/docker.sock:/var/run/docker.sock", "/cache"]
+    network_mode = "integration-net"

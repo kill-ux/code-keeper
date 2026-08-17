@@ -6,6 +6,11 @@
     file: vault.yml
   tags: [always]
 
+- name: Create shared Docker network for CI jobs
+  community.docker.docker_network:
+    name: integration-net
+    state: present
+
 - name: Ensure GitLab Runner configuration directory exists
   ansible.builtin.file:
     path: /srv/gitlab-runner/config
