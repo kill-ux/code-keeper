@@ -185,7 +185,7 @@ deploy_staging:
 deploy_production:
   extends: .deploy_ecs
   variables:
-    ENVIRONMENT: production
+    ENVIRONMENT: prod
     TASK_NAME: inventory-app
     ECS_CLUSTER: cloud-design-cluster-${ENVIRONMENT}
     ECS_SERVICE: ${TASK_NAME}-service-${ENVIRONMENT}
