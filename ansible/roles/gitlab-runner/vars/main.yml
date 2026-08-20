@@ -2,3 +2,4 @@
 ---
 # vars file for roles/gitlab-runner
 gitlab_runner_name: "docker-runner"
+gitlab_runner_concurrent: 2
