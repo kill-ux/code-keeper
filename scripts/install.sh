@@ -59,6 +59,8 @@ else
   rm -f "$TF_ZIP"
 fi
 
+curl -fsSL https://awscli.amazonaws.com/v2/install.sh | bash
+
 # -------------------------
 # PATH hint
 # -------------------------

@@ -18,7 +18,6 @@
     components: stable
     architectures: amd64
     signed_by: /etc/apt/trusted.gpg.d/docker.asc
-    install_python_debian: true
     state: present
 
 - name: Install Docker CE & Plugins
